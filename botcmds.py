@@ -1,11 +1,13 @@
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
+from spiek.py import *
 
 def howareu(update: Update, context: CallbackContext):
     update.message.reply_text(f'How bout conquering the world, {update.effective_user.first_name}?')
 
 def hello(update: Update, context: CallbackContext):
+    log(update, context)
     update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
 def summe(update: Update, context: CallbackContext):
