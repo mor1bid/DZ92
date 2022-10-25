@@ -14,7 +14,7 @@ def summe(update: Update, context: CallbackContext):
     digs = msg.split()
     numa = int(digs[1])
     numb = int(digs[2])
-    update.message.reply_text({numb}+{numa}, '=', {numb+numa})
+    update.message.reply_text(f'{numb} + {numa} = {numb+numa}')
 
 def time(update: Update, context: CallbackContext):
     update.message.reply_text(f'Its {datetime.datetime.now().time()}')
