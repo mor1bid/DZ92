@@ -9,10 +9,12 @@ def hello(update: Update, context: CallbackContext):
     update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
 def summe(update: Update, context: CallbackContext):
-    numa = int(input('Input first number, please: '))
-    update.message.reply_text({numa})
-    numb = int(input('second: '))
-    update.message.reply_text({numb})
+    # update.message.reply_text(f'Enter 2 digits please:')
+    msg = update.message.text
+    digs = msg.split()
+    numa = int(digs[1])
+    numb = int(digs[2])
+    update.message.reply_text({numb}+{numa}, '=', {numb+numa})
 
 def time(update: Update, context: CallbackContext):
     update.message.reply_text(f'Its {datetime.datetime.now().time()}')
