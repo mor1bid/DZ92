@@ -4,16 +4,18 @@ import functools, operator
 # from vxoxendgame import veg
 
 print('1. Крестики-нолики! \nВводите через пробел соответсвующую позицию в вертикали и горизонтали для игры. \nПервый ряд, первый столбец: 0 0\nВторой ряд, первый столбец: 0 1\nТретий ряд, второй столбец: 1 2 и т.д.\n')
-board = Board(dimensions = (3, 3, 1), x_in_a_row = 8)
+board = Board(dimensions = (3, 3, 1), x_in_a_row = 3)
 print(board)
 for i in range(0, 9):
     if i >= 5:
         dimensions = (3, 3, 1)
         total_squares = functools.reduce(operator.mul, dimensions)
-        for index in reversed(range(total_squares + 1)):
+        for index in reversed(range(total_squares)):
             Generator(dimensions, 3, index)
-        reader = Reader((3, 3, 1), 3, 8)
-        print(reader.index(board))
+        reader = Reader((3, 3, 1), 3, i)
+        if reader.index(board) != 0:
+            print(f'\n{reader.index(board)}-й игрок побеждает. ')
+            break
     if i % 2 != 0:
         xy = input('\nИгрок 2, введите желаемую позицию: ').split()
     else: 
