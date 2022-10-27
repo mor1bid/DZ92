@@ -1,3 +1,4 @@
+from calc import minus, divide, multi
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
@@ -57,9 +58,16 @@ def exportnote (update: Update, context: CallbackContext):
         path += i
     with open('Phonebook.txt', 'r') as expex:
         exp = expex.readlines()
-    with open(path, 'a') as file:
-        file.write('\n')
-        file.writelines(exp)
+    update.message.reply_text('Do you wish to export in lines or in list? 1/2')
+    answ = update.message.text
+    if answ == '2':
+        with open(path, 'a') as file:
+            file.write(' \n')
+            file.writelines(exp)
+    elif answ == '1':
+        with open(path, 'a') as file:
+            file.writelines(exp)
+        file.write(' \n')    
     update.message.reply_text('Done. For readin your notes, type /nread')
 
 def importnote (update: Update, context: CallbackContext):
@@ -74,3 +82,22 @@ def importnote (update: Update, context: CallbackContext):
         file.write('\n')
         file.writelines(imp)
     update.message.reply_text('Done. For readin your notes, type /nread')
+
+def math(update: Update, context: CallbackContext):
+    msg = update.message.text.strip(" ")
+    def count_from_string(msg):
+        if "(" in msg:
+            bk1 = msg.rindex("(")
+            bk2 = msg.index(")", bk1)
+            return count_from_string(msg[:bk1] + str(count_from_string(msg[bk1 + 1:bk2])) + msg[bk2 + 1:])
+        if msg.isdigit():
+            return int(msg)
+        if "+" in msg:
+            return sum([count_from_string(item) for item in msg.split("+", 1)])
+        if "-" in msg:
+            return minus([count_from_string(item) for item in msg.split("-", 1)])
+        if "/" in msg:
+            return divide([count_from_string(item) for item in msg.split("/", 1)])
+        if "*" in msg:
+            return multi([count_from_string(item) for item in msg.split("*", 1)])
+    update.message.reply_text(f'The answer is: {count_from_string}')
