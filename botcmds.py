@@ -1,9 +1,9 @@
-from calc import minus, divide, multi
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
 from spiek import *
-from makenote-m1 import *
+from makenotem1 import mnm1
+updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
@@ -32,14 +32,7 @@ def helpme(update: Update, context: CallbackContext):
 
 def makenote (update: Update, context: CallbackContext):
     log(update, context)
-    msg = update.message.text.split()
-    msg.pop(0)
-    with open('Phonebook.txt', 'a') as file:
-        for i in msg:
-            file.write(' \n')
-            file.write(i)
-        file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread')
+    updater.dispatcher.add_handler(CommandHandler('2', mnm1))
 
 def readnote (update: Update, context: CallbackContext):
     log(update, context)

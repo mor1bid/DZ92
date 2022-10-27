@@ -10,3 +10,12 @@ def mnm1(update: Update, context: CallbackContext):
             file.write(i)
         file.write(' \n')
         update.message.reply_text('Done. For readin your notes, type /nread')
+
+def mnm2(update: Update, context: CallbackContext):
+    msg = update.message.text.split()
+    msg.pop(0)
+    with open('Phonebook.txt', 'a') as file:
+        for i in msg:
+            file.write(i)
+        file.write(' \n')
+        update.message.reply_text('Done. For readin your notes, type /nread')
