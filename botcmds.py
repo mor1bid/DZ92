@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
 from spiek import *
-updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
+from makenote-m1 import *
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
