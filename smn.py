@@ -14,7 +14,7 @@ updater.dispatcher.add_handler(CommandHandler('nmake', makenote))
 updater.dispatcher.add_handler(CommandHandler('nread', readnote))
 updater.dispatcher.add_handler(CommandHandler('nimport', importnote))
 updater.dispatcher.add_handler(CommandHandler('nexport', exportnote))
-updater.dispatcher.add_handler(CommandHandler('math', exportnote))
+updater.dispatcher.add_handler(CommandHandler('math', math))
 
 print('server start')
 

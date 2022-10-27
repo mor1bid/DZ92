@@ -3,6 +3,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
 from spiek import *
+updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
@@ -42,9 +43,14 @@ def makenote (update: Update, context: CallbackContext):
 
 def readnote (update: Update, context: CallbackContext):
     log(update, context)
+    path = ''
+    msg = update.message.text.split()
+    msg.pop(0)
+    for i in msg:
+        path += i
     text = ''
     # msg = update.message.text
-    with open('Phonebook.txt', 'r') as file:
+    with open(path, 'r') as file:
         for line in file:
             text += line
             text += '\n'
@@ -58,16 +64,9 @@ def exportnote (update: Update, context: CallbackContext):
         path += i
     with open('Phonebook.txt', 'r') as expex:
         exp = expex.readlines()
-    update.message.reply_text('Do you wish to export in lines or in list? 1/2')
-    answ = update.message.text
-    if answ == '2':
-        with open(path, 'a') as file:
-            file.write(' \n')
-            file.writelines(exp)
-    elif answ == '1':
-        with open(path, 'a') as file:
-            file.writelines(exp)
-        file.write(' \n')    
+    with open(path, 'a') as file:
+        file.write(' \n')
+        file.writelines(exp)
     update.message.reply_text('Done. For readin your notes, type /nread')
 
 def importnote (update: Update, context: CallbackContext):
@@ -85,6 +84,15 @@ def importnote (update: Update, context: CallbackContext):
 
 def math(update: Update, context: CallbackContext):
     msg = update.message.text.strip(" ")
+    def minus(lst):
+        return lst[0] - lst[1]
+
+    def multi(lst):
+        return lst[0] * lst[1]
+
+    def divide(lst):
+        return lst[0] / lst[1]
+
     def count_from_string(msg):
         if "(" in msg:
             bk1 = msg.rindex("(")
@@ -100,4 +108,4 @@ def math(update: Update, context: CallbackContext):
             return divide([count_from_string(item) for item in msg.split("/", 1)])
         if "*" in msg:
             return multi([count_from_string(item) for item in msg.split("*", 1)])
-    update.message.reply_text(f'The answer is: {count_from_string}')
+    update.message.reply_text(f'The answer is: {count_from_string(msg)}')
