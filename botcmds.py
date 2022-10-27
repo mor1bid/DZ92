@@ -49,7 +49,7 @@ def readnote (update: Update, context: CallbackContext):
             text += '\n'
         update.message.reply_text(text)
 
-def importnote (update: Update, context: CallbackContext):
+def exportnote (update: Update, context: CallbackContext):
     path = ''
     msg = update.message.text.split()
     msg.pop(0)
@@ -62,7 +62,7 @@ def importnote (update: Update, context: CallbackContext):
         file.writelines(exp)
     update.message.reply_text('Done. For readin your notes, type /nread')
 
-def exportnote (update: Update, context: CallbackContext):
+def importnote (update: Update, context: CallbackContext):
     path = ''
     msg = update.message.text.split()
     msg.pop(0)

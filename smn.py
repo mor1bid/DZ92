@@ -13,6 +13,7 @@ updater.dispatcher.add_handler(CommandHandler('summe', summe))
 updater.dispatcher.add_handler(CommandHandler('nmake', makenote))
 updater.dispatcher.add_handler(CommandHandler('nread', readnote))
 updater.dispatcher.add_handler(CommandHandler('nimport', importnote))
+updater.dispatcher.add_handler(CommandHandler('nexport', exportnote))
 
 print('server start')
 
