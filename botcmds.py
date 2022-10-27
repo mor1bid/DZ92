@@ -45,3 +45,12 @@ def readnote (update: Update, context: CallbackContext):
             text += line
             text += '\n'
         update.message.reply_text(text)
+
+def importnote (update: Update, context: CallbackContext):
+    path = update.message.text.strip('/importnote ')
+    with open(path, 'r') as impex:
+        imp = impex.readlines()
+    with open('DZPhonebook.txt', 'a') as file:
+            # for line in file:
+        file.writelines(imp)
+    update.message.reply_text('imported')

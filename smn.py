@@ -10,8 +10,9 @@ updater.dispatcher.add_handler(CommandHandler('hello', hello))
 updater.dispatcher.add_handler(CommandHandler('help', helpme))
 updater.dispatcher.add_handler(CommandHandler('time', time))
 updater.dispatcher.add_handler(CommandHandler('summe', summe))
-updater.dispatcher.add_handler(CommandHandler('makenote', makenote))
-updater.dispatcher.add_handler(CommandHandler('readnote', readnote))
+updater.dispatcher.add_handler(CommandHandler('nmake', makenote))
+updater.dispatcher.add_handler(CommandHandler('nread', readnote))
+updater.dispatcher.add_handler(CommandHandler('nimport', importnote))
 
 print('server start')
 
