@@ -1,4 +1,4 @@
-from botcmds import howareu, hello, time, summe, helpme
+from botcmds import *
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
@@ -10,6 +10,8 @@ updater.dispatcher.add_handler(CommandHandler('hello', hello))
 updater.dispatcher.add_handler(CommandHandler('help', helpme))
 updater.dispatcher.add_handler(CommandHandler('time', time))
 updater.dispatcher.add_handler(CommandHandler('summe', summe))
+updater.dispatcher.add_handler(CommandHandler('makenote', makenote))
+updater.dispatcher.add_handler(CommandHandler('readnote', readnote))
 
 print('server start')
 
