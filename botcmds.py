@@ -2,7 +2,6 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 import datetime
 from spiek import *
-from makenotem1 import mnm1
 updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
@@ -28,11 +27,29 @@ def time(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hi\n/howareu\n/time\n/summe\n/makenote\n/readnote\nFor work with a phonebook type:\n/nwrite\n/nread\n/nimport\n/nexport\n')
+    update.message.reply_text(f'Here ye go:\n/hi\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist - to write a note in long list\n/nline - to write a note in single line\n/nread - to view chosed file\'s exterier\n/nimport - to move data from another file into your phonebook\n/nexport - to move book\'s data into another file\n')
 
-def makenote (update: Update, context: CallbackContext):
+def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
-    updater.dispatcher.add_handler(CommandHandler('2', mnm1))
+    msg = update.message.text.split()
+    msg.pop(0)
+    with open('Phonebook.txt', 'a') as file:
+        for i in msg:
+            file.write(' \n')
+            file.write(i)
+        file.write(' \n')
+        update.message.reply_text('Done. For readin your notes, type /nread')
+def makenote2 (update: Update, context: CallbackContext):
+    log(update, context)
+    msg = update.message.text.split()
+    msg.pop(0)
+    with open('Phonebook.txt', 'a') as file:
+        file.write(' \n')
+        for i in msg:
+            file.write(i)
+            file.write(' ')
+        file.write(' \n')
+        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def readnote (update: Update, context: CallbackContext):
     log(update, context)
@@ -60,7 +77,7 @@ def exportnote (update: Update, context: CallbackContext):
     with open(path, 'a') as file:
         file.write(' \n')
         file.writelines(exp)
-    update.message.reply_text('Done. For readin your notes, type /nread')
+    update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def importnote (update: Update, context: CallbackContext):
     path = ''
@@ -73,7 +90,7 @@ def importnote (update: Update, context: CallbackContext):
     with open('Phonebook.txt', 'a') as file:
         file.write('\n')
         file.writelines(imp)
-    update.message.reply_text('Done. For readin your notes, type /nread')
+    update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def math(update: Update, context: CallbackContext):
     msg = update.message.text.strip(" ")
