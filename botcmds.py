@@ -27,7 +27,7 @@ def time(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hi\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist - to write a note in long list\n/nline - to write a note in single line\n/nread - to view chosed file\'s exterier\n/nimport - to move data from another file into your phonebook\n/nexport - to move book\'s data into another file\n')
+    update.message.reply_text(f'Here ye go:\n/hi\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
@@ -38,7 +38,7 @@ def makenote1 (update: Update, context: CallbackContext):
             file.write(' \n')
             file.write(i)
         file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread')
+        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 def makenote2 (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
@@ -92,30 +92,4 @@ def importnote (update: Update, context: CallbackContext):
         file.writelines(imp)
     update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
-def math(update: Update, context: CallbackContext):
-    msg = update.message.text.strip(" ")
-    def minus(lst):
-        return lst[0] - lst[1]
-
-    def multi(lst):
-        return lst[0] * lst[1]
-
-    def divide(lst):
-        return lst[0] / lst[1]
-
-    def count_from_string(msg):
-        if "(" in msg:
-            bk1 = msg.rindex("(")
-            bk2 = msg.index(")", bk1)
-            return count_from_string(msg[:bk1] + str(count_from_string(msg[bk1 + 1:bk2])) + msg[bk2 + 1:])
-        if msg.isdigit():
-            return int(msg)
-        if "+" in msg:
-            return sum([count_from_string(item) for item in msg.split("+", 1)])
-        if "-" in msg:
-            return minus([count_from_string(item) for item in msg.split("-", 1)])
-        if "/" in msg:
-            return divide([count_from_string(item) for item in msg.split("/", 1)])
-        if "*" in msg:
-            return multi([count_from_string(item) for item in msg.split("*", 1)])
-    update.message.reply_text(f'The answer is: {count_from_string(msg)}')
+# def math(update: Update, context: CallbackContext):
