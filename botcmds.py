@@ -27,7 +27,7 @@ def time(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hi\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
