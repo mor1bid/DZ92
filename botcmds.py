@@ -1,13 +1,10 @@
-from telegram import Update, Bot, Chat
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telepot import *
+from telegram import Update
+from telegram.ext import CallbackContext
 import os
-from pathlib import Path
 import datetime
 from spiek import *
 user = os.path.join(os.path.expanduser('~'), 'Desktop', 'Phonebook.txt')
-# home = str(Path.home())
-# hpath = os.path.expanduser(f"{user}\\Desktop\\")
-updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
@@ -19,7 +16,6 @@ def hello(update: Update, context: CallbackContext):
 
 def summe(update: Update, context: CallbackContext):
     log(update, context)
-    # update.message.reply_text(f'Enter 2 digits please:')
     msg = update.message.text
     digs = msg.split()
     numa = int(digs[1])
@@ -32,7 +28,7 @@ def time(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/ndel "file directory" - for erasing all of choosed file\'s data. Type twice with the same file path to delete it completly\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
@@ -42,7 +38,9 @@ def makenote1 (update: Update, context: CallbackContext):
         for i in msg:
             file.write(' \n')
             file.write(i)
-        file.write(' \n') 
+        file.write(' \n')
+        with open(user, 'rb') as doc:
+            context.bot.send_document(chat_id = update.effective_chat.id, document = doc)
         update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
 def makenote2 (update: Update, context: CallbackContext):
     log(update, context)
@@ -54,8 +52,27 @@ def makenote2 (update: Update, context: CallbackContext):
             file.write(i)
             file.write(' ')
         file.write(' \n')
+        with open(user, 'rb') as doc:
+            context.bot.send_document(chat_id = update.effective_chat.id, document = doc)
         update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
 
+def ndel (update: Update, context: CallbackContext):
+    log(update, context)
+    path = ''
+    msg = update.message.text.split()
+    msg.pop(0)
+    for i in msg:
+        path += i
+    with open(path, 'w', encoding='UTF-8') as file:
+        file.seek(0)
+        file.truncate()
+        if os.stat(path).st_size == 0:
+            path.split('.')
+            print(path[len(path)-1])
+            if path[len(path)-1] in path:
+                os.remove(path)
+        update.message.reply_text('Done. For complete deletion, type /ndel once more')
+    
 def readnote (update: Update, context: CallbackContext):
     log(update, context)
     path = ''
@@ -64,7 +81,6 @@ def readnote (update: Update, context: CallbackContext):
     for i in msg:
         path += i
     text = ''
-    # msg = update.message.text
     with open(path, 'r') as file:
         for line in file:
             text += line
