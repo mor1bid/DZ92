@@ -1,7 +1,12 @@
-from telegram import Update
+from telegram import Update, Bot, Chat
 from telegram.ext import Updater, CommandHandler, CallbackContext
+import os
+from pathlib import Path
 import datetime
 from spiek import *
+user = os.path.join(os.path.expanduser('~'), 'Desktop', 'Phonebook.txt')
+# home = str(Path.home())
+# hpath = os.path.expanduser(f"{user}\\Desktop\\")
 updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
@@ -33,23 +38,23 @@ def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
     msg.pop(0)
-    with open('Phonebook.txt', 'a') as file:
+    with open(f'{user}', 'a') as file:
         for i in msg:
             file.write(' \n')
             file.write(i)
-        file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+        file.write(' \n') 
+        update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
 def makenote2 (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
     msg.pop(0)
-    with open('Phonebook.txt', 'a') as file:
+    with open(f'{user}', 'a') as file:
         file.write(' \n')
         for i in msg:
             file.write(i)
             file.write(' ')
         file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+        update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
 
 def readnote (update: Update, context: CallbackContext):
     log(update, context)
