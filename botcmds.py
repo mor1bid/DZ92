@@ -4,7 +4,9 @@ from telegram.ext import CallbackContext
 import os
 import datetime
 from spiek import *
-user = os.path.join(os.path.expanduser('~'), 'Desktop', 'Phonebook.txt')
+if not os.path.exists(os.path.expanduser('~/NSHR')):
+    os.makedirs(os.path.expanduser('~/NSHR'))
+home = os.path.join(os.path.expanduser('~/NSHR'), 'Phonebook.txt')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
@@ -22,38 +24,38 @@ def summe(update: Update, context: CallbackContext):
     numb = int(digs[2])
     update.message.reply_text(f'Here ye go: {numb} + {numa} = {numb+numa}')
 
-def time(update: Update, context: CallbackContext):
+def mytime(update: Update, context: CallbackContext):
     log(update, context)
     update.message.reply_text(f'Its {datetime.datetime.now().time()}')
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\n/nlist [text] - to write a note in long list.\n/nline [text] - to write a note in single line\n/ndel "file directory" - for erasing all of choosed file\'s data\n/nread [path] - to view chosed file\'s exterier\n/nimport [path] - to move data from another file into your phonebook\n/nexport [path] - to move book\'s data into another file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\nMain file path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file directory" - to erase all of chosen file\'s data\n/nread "file directory" - to view chosen file\'s interior\n/nload - to download main file from server\n/nimport "file directory" - to move data from another file into your phonebook\n/nexport "file directory" - to move book\'s data into another file\create new file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
     msg.pop(0)
-    with open(f'{user}', 'a') as file:
+    with open(home, 'a', encoding='UTF-8') as file:
         for i in msg:
             file.write(' \n')
             file.write(i)
         file.write(' \n')
-        update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
+        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 def makenote2 (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
     msg.pop(0)
-    with open(f'{user}', 'a') as file:
+    with open(home, 'a', encoding='UTF-8') as file:
         file.write(' \n')
         for i in msg:
             file.write(i)
             file.write(' ')
         file.write(' \n')
-        update.message.reply_text(f'{user}\nDone. For readin your notes, type /nread and path to your file')
+        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def nload (update: Update, context: CallbackContext):
-    with open(user, 'rb') as doc:
+    with open(home, 'rb') as doc:
         update.message.reply_text('Here ye go:')
         context.bot.send_document(chat_id = update.effective_chat.id, document = doc)
 
@@ -77,7 +79,7 @@ def readnote (update: Update, context: CallbackContext):
     for i in msg:
         path += i
     text = ''
-    with open(path, 'r') as file:
+    with open(path, 'r', encoding='UTF-8') as file:
         for line in file:
             text += line
             text += '\n'
@@ -89,7 +91,7 @@ def exportnote (update: Update, context: CallbackContext):
     msg.pop(0)
     for i in msg:
         path += i
-    with open('Phonebook.txt', 'r') as expex:
+    with open(home, 'r', encoding='UTF-8') as expex:
         exp = expex.readlines()
     with open(path, 'a') as file:
         file.write(' \n')
@@ -104,7 +106,7 @@ def importnote (update: Update, context: CallbackContext):
         path += i
     with open(path, 'r') as impex:
         imp = impex.readlines()
-    with open('Phonebook.txt', 'a') as file:
+    with open(home, 'a', encoding='UTF-8') as file:
         file.write('\n')
         file.writelines(imp)
     update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
