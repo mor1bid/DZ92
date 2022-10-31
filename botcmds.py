@@ -23,7 +23,7 @@ def mytime(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math "request"\nFor work with a phonebook, type:\nWorking path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file directory" - to erase all of chosen file\'s data\n/nread "file directory" - to view chosen file\'s interior\n/nload - to download main file from server\n/nimport "file directory" - to move data from another file into your phonebook\n/nexport "file directory" - to move book\'s data into another file\create new file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math "request"\nFor work with a phonebook, type:\nWorking path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file name" - to erase all of chosen file\'s data\n/nread "file name" - to view chosen file\'s interior\n/nload "file name" - to download file from server\n/nimport "file name" - to move data from another file into your phonebook\n/nexport "file name" - to move book\'s data into another file\create new file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
