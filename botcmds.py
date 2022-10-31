@@ -79,6 +79,7 @@ def readnote (update: Update, context: CallbackContext):
         update.message.reply_text(text)
 
 def exportnote (update: Update, context: CallbackContext):
+    log(update, context)
     path = ''
     msg = update.message.text.split()
     msg.pop(0)
@@ -92,6 +93,7 @@ def exportnote (update: Update, context: CallbackContext):
     update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def importnote (update: Update, context: CallbackContext):
+    log(update, context)
     path = ''
     msg = update.message.text.split()
     msg.pop(0)
@@ -105,9 +107,10 @@ def importnote (update: Update, context: CallbackContext):
     update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
 def math(update: Update, context: CallbackContext):
+    log(update, context)
     ask = update.message.text.split()
     ask.pop(0)
-    # update.message.reply_text(f'Answer: {ask}')
+    update.message.reply_text(f'Answer: {ask}')
     msg = ''
     for i in ask:
         msg += i
@@ -137,4 +140,4 @@ def math(update: Update, context: CallbackContext):
         if "*" in msg:
             return multi([count_from_string(item) for item in msg.split("*", 1)])
 
-    update.message.reply_text(f'Answer: {count_from_string(msg)}')
+    update.message.reply_text(f'Answer: {round(count_from_string(msg), 2)}')
