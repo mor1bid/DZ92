@@ -1,3 +1,4 @@
+# from calc import *
 from telepot import *
 from telegram import Update
 from telegram.ext import CallbackContext
@@ -16,21 +17,13 @@ def hello(update: Update, context: CallbackContext):
     log(update, context)
     update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
-def summe(update: Update, context: CallbackContext):
-    log(update, context)
-    msg = update.message.text
-    digs = msg.split()
-    numa = int(digs[1])
-    numb = int(digs[2])
-    update.message.reply_text(f'Here ye go: {numb} + {numa} = {numb+numa}')
-
 def mytime(update: Update, context: CallbackContext):
     log(update, context)
     update.message.reply_text(f'Its {datetime.datetime.now().time()}')
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/summe\nFor work with a phonebook, type:\nMain file path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file directory" - to erase all of chosen file\'s data\n/nread "file directory" - to view chosen file\'s interior\n/nload - to download main file from server\n/nimport "file directory" - to move data from another file into your phonebook\n/nexport "file directory" - to move book\'s data into another file\create new file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math\nFor work with a phonebook, type:\nMain file path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file directory" - to erase all of chosen file\'s data\n/nread "file directory" - to view chosen file\'s interior\n/nload - to download main file from server\n/nimport "file directory" - to move data from another file into your phonebook\n/nexport "file directory" - to move book\'s data into another file\create new file\n')
 
 def makenote1 (update: Update, context: CallbackContext):
     log(update, context)
@@ -111,4 +104,37 @@ def importnote (update: Update, context: CallbackContext):
         file.writelines(imp)
     update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
 
-# def math(update: Update, context: CallbackContext):
+def math(update: Update, context: CallbackContext):
+    ask = update.message.text.split()
+    ask.pop(0)
+    # update.message.reply_text(f'Answer: {ask}')
+    msg = ''
+    for i in ask:
+        msg += i
+
+    def minus(msg):
+        return msg[0] - msg[1]
+
+    def multi(msg):
+        return msg[0] * msg[1]
+
+    def divide(msg):
+        return msg[0] / msg[1]
+
+    def count_from_string(msg):
+        if "(" in msg:
+            bk1 = msg.rindex("(")
+            bk2 = msg.index(")", bk1)
+            return count_from_string(msg[:bk1] + str(count_from_string(msg[bk1 + 1:bk2])) + msg[bk2 + 1:])
+        if msg.isdigit():
+            return int(msg)
+        if "+" in msg:
+            return sum([count_from_string(item) for item in msg.split("+", 1)])
+        if "-" in msg:
+            return minus([count_from_string(item) for item in msg.split("-", 1)])
+        if "/" in msg:
+            return divide([count_from_string(item) for item in msg.split("/", 1)])
+        if "*" in msg:
+            return multi([count_from_string(item) for item in msg.split("*", 1)])
+
+    update.message.reply_text(f'Answer: {count_from_string(msg)}')
