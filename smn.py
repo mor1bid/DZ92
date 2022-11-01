@@ -1,7 +1,5 @@
 from botcmds import *
-# from calc import math
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler
 
 
 updater = Updater('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
@@ -10,6 +8,7 @@ updater.dispatcher.add_handler(CommandHandler('howareu', howareu))
 updater.dispatcher.add_handler(CommandHandler('hello', hello))
 updater.dispatcher.add_handler(CommandHandler('help', helpme))
 updater.dispatcher.add_handler(CommandHandler('time', mytime))
+updater.dispatcher.add_handler(CommandHandler('nbook', nbook))
 updater.dispatcher.add_handler(CommandHandler('nlist', makenote1))
 updater.dispatcher.add_handler(CommandHandler('nline', makenote2))
 updater.dispatcher.add_handler(CommandHandler('nload', nload))
