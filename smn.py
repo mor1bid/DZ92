@@ -1,4 +1,5 @@
 from botcmds import *
+from pb import nbook
 from telegram.ext import Updater, CommandHandler
 
 
@@ -9,8 +10,8 @@ updater.dispatcher.add_handler(CommandHandler('hello', hello))
 updater.dispatcher.add_handler(CommandHandler('help', helpme))
 updater.dispatcher.add_handler(CommandHandler('time', mytime))
 updater.dispatcher.add_handler(CommandHandler('nbook', nbook))
-updater.dispatcher.add_handler(CommandHandler('nlist', makenote1))
-updater.dispatcher.add_handler(CommandHandler('nline', makenote2))
+updater.dispatcher.add_handler(CommandHandler('nlist', nlist))
+updater.dispatcher.add_handler(CommandHandler('nline', nline))
 updater.dispatcher.add_handler(CommandHandler('nload', nload))
 updater.dispatcher.add_handler(CommandHandler('ndel', ndel))
 updater.dispatcher.add_handler(CommandHandler('nread', readnote))

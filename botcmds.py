@@ -1,13 +1,14 @@
+from turtle import update
 from telepot import *
 from telegram import Update
 from telegram.ext import CallbackContext
 import os
 import datetime
-from pb import *
+# from pb import *
 from spiek import *
 if not os.path.exists(os.path.expanduser('~\\NSHR')):
     os.makedirs(os.path.expanduser('~\\NSHR'))
-phonebook = ''
+phonebook = 'Phonebook.txt'
 home = os.path.join(os.path.expanduser('~\\NSHR'))
 
 def howareu(update: Update, context: CallbackContext):
@@ -20,7 +21,7 @@ def hello(update: Update, context: CallbackContext):
 
 def mytime(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Its {datetime.datetime.now().time()}')
+    update.message.reply_text(f'Its {datetime.datetime.now().time().replace(microsecond=0)}')
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
@@ -28,14 +29,18 @@ def helpme(update: Update, context: CallbackContext):
 
 def nbook (update: Update, context: CallbackContext):
     log(update, context)
-    pb(phonebook)
+    phonebook = ''
+    msg = update.message.text.split()
+    msg.pop(0)
+    for i in msg:
+        phonebook += i
     update.message.reply_text('Done.')
 
 def nlist (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
     msg.pop(0)
-    with open(f'{home}\\{nbook(phonebook)}', 'a', encoding='UTF-8') as file:
+    with open(f'{home}\\{phonebook}', 'a', encoding='UTF-8') as file:
         for i in msg:
             file.write(' \n')
             file.write(i)
