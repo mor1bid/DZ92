@@ -1,10 +1,8 @@
-from turtle import update
 from telepot import *
 from telegram import Update
 from telegram.ext import CallbackContext
 import os
 import datetime
-# from pb import *
 from spiek import *
 if not os.path.exists(os.path.expanduser('~\\NSHR')):
     os.makedirs(os.path.expanduser('~\\NSHR'))
@@ -27,15 +25,6 @@ def helpme(update: Update, context: CallbackContext):
     log(update, context)
     update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math "request"\nFor work with a phonebook, type:\nWorking path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file name" - to erase all of chosen file\'s data\n/nread "file name" - to view chosen file\'s interior\n/nload "file name" - to download file from server\n/nimport "file name" - to move data from another file into your phonebook\n/nexport "file name" - to move book\'s data into another file\create new file\n')
 
-def nbook (update: Update, context: CallbackContext):
-    log(update, context)
-    phonebook = ''
-    msg = update.message.text.split()
-    msg.pop(0)
-    for i in msg:
-        phonebook += i
-    update.message.reply_text('Done.')
-
 def nlist (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
@@ -45,7 +34,7 @@ def nlist (update: Update, context: CallbackContext):
             file.write(' \n')
             file.write(i)
         file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+        update.message.reply_text('Done. For readin your notes, type /nread and name of your file')
 def nline (update: Update, context: CallbackContext):
     log(update, context)
     msg = update.message.text.split()
@@ -56,7 +45,7 @@ def nline (update: Update, context: CallbackContext):
             file.write(i)
             file.write(' ')
         file.write(' \n')
-        update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+        update.message.reply_text('Done. For readin your notes, type /nread and name of your file')
 
 def nload (update: Update, context: CallbackContext):
     log(update, context)
@@ -110,7 +99,7 @@ def exportnote (update: Update, context: CallbackContext):
     with open(f'{home}\\{path}', 'a') as file:
         file.write(' \n')
         file.writelines(exp)
-    update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+    update.message.reply_text('Done. For readin your notes, type /nread and name of your file')
 
 def importnote (update: Update, context: CallbackContext):
     log(update, context)
@@ -124,7 +113,7 @@ def importnote (update: Update, context: CallbackContext):
     with open(f'{home}\\{phonebook}', 'a', encoding='UTF-8') as file:
         file.write('\n')
         file.writelines(imp)
-    update.message.reply_text('Done. For readin your notes, type /nread and path to your file')
+    update.message.reply_text('Done. For readin your notes, type /nread and name of your file')
 
 def math(update: Update, context: CallbackContext):
     log(update, context)
