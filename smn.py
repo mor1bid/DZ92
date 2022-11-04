@@ -1,5 +1,4 @@
 from botcmds import *
-# from pb import nbook
 from telegram.ext import Updater, CommandHandler
 
 

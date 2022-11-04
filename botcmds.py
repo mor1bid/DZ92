@@ -23,7 +23,7 @@ def mytime(update: Update, context: CallbackContext):
 
 def helpme(update: Update, context: CallbackContext):
     log(update, context)
-    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math "request"\nFor work with a phonebook, type:\nWorking path: {home}\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file name" - to erase all of chosen file\'s data\n/nread "file name" - to view chosen file\'s interior\n/nload "file name" - to download file from server\n/nimport "file name" - to move data from another file into your phonebook\n/nexport "file name" - to move book\'s data into another file\create new file\n')
+    update.message.reply_text(f'Here ye go:\n/hello\n/howareu\n/time\n/math "request"\nFor work with a phonebook, type:\n(Working path: {home}\Phonebook.txt)\n/nlist "text" - to write a note in main file in long list.\n/nline "text" - to write a note in main file in single line\n/ndel "file name" - to erase all of chosen file\'s data\n/nread "file name" - to view chosen file\'s interior\n/nload "file name" - to download file from server\n/nimport "file name" - to move data from another file into your phonebook\n/nexport "file name" - to move book\'s data into another file\create new file\n')
 
 def nlist (update: Update, context: CallbackContext):
     log(update, context)
@@ -66,11 +66,8 @@ def ndel (update: Update, context: CallbackContext):
     for i in msg:
         path += i
     with open(f'{home}\\{path}', 'w', encoding='UTF-8') as file:
-        if os.stat(path).st_size != 0:
-            file.seek(0)
-            file.truncate()
-        else:
-            os.remove(path)
+        file.seek(0)
+        file.truncate()
         update.message.reply_text('Done.')
     
 def readnote (update: Update, context: CallbackContext):
