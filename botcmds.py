@@ -116,7 +116,6 @@ def math(update: Update, context: CallbackContext):
     log(update, context)
     ask = update.message.text.split()
     ask.pop(0)
-    update.message.reply_text(f'Answer: {ask}')
     msg = ''
     for i in ask:
         msg += i
