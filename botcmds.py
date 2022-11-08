@@ -1,3 +1,4 @@
+import telebot
 from telepot import *
 from telegram import Update
 from telegram.ext import CallbackContext
@@ -8,6 +9,8 @@ if not os.path.exists(os.path.expanduser('~\\NSHR')):
     os.makedirs(os.path.expanduser('~\\NSHR'))
 phonebook = 'Phonebook.txt'
 home = os.path.join(os.path.expanduser('~\\NSHR'))
+
+bot = telebot.TeleBot('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
@@ -56,7 +59,7 @@ def nload (update: Update, context: CallbackContext):
         path += i
     with open(f'{home}\\{path}', 'rb') as doc:
         update.message.reply_text('Here ye go:')
-        context.bot.send_document(chat_id = update.effective_chat.id, document = doc)
+        context.update.send_document(chat_id = update.effective_chat.id, document = doc)
 
 def ndel (update: Update, context: CallbackContext):
     log(update, context)
@@ -146,3 +149,23 @@ def math(update: Update, context: CallbackContext):
             return multi([count_from_string(item) for item in msg.split("*", 1)])
 
     update.message.reply_text(f'Answer: {round(count_from_string(msg), 2)}')
+
+# def nbook(update: Update, context: CallbackContext):
+    # def start_3(message, value):
+    #     print(message.text, value)
+
+    # def start_2(message):
+    #     if message.text == "Паника":
+    #         bot.send_message(message.from_user.id, "Заразна!")
+    #     id2 = update.message.chat_id
+    #     msg = bot.send_message(chat_id = id2, text='Введите второе значение')
+    #     mysg = update.message.text.split()
+    #     mysg.pop(0)
+    #     bot.register_next_step_handler(msg, start_3, message.text)
+
+    # id = update.message.chat_id
+    # msg = bot.send_message(chat_id = id, text='Введите первое значение')
+    # answer_callback_query
+    # mysg = update.message.text.split()
+    # # mysg.pop(0)
+    # bot.register_next_step_handler(msg, start_2)
