@@ -2,7 +2,6 @@ import telebot
 from spiek import *
 from cmath import *
 import cmath
-
 bot = telebot.TeleBot('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 print('\nNashira s\'here')
@@ -14,18 +13,25 @@ def math(meg: telebot.types.Message):
     bot.send_message(meg.from_user.id, 'Hello. Please select mode by typing a proper number:\n(1) Rational\(2) Complex')
     bot.register_next_step_handler(meg, mode)
 
-def mode(msg: telebot.types.Message):
-    answ = msg.text
-    if answ == '1':
-        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can sum[+], substract[-], multiply[*] or divide[/]\nany rational numbers in any order, in round brackets [()] too')
-        bot.register_next_step_handler(msg, work)
-    elif answ == '2':
-        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can use: sin, cos, sqrt functions on a single number')
-        bot.register_next_step_handler(msg, calc)
+# def mode(msg: telebot.types.Message, start = 0):
+#     if start != 0:
+#         bot.send_message(msg.from_user.id, 'Please select mode by typing a proper number:\n(1) Rational\(2) Complex')   
+#     answ = msg.text
+#     if answ == '1':
+#         bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can sum[+], substract[-], multiply[*] or divide[/]\nany rational numbers in any order, in round brackets [()] too')
+#         bot.register_next_step_handler(msg, work)
+#     elif answ == '2':
+#         bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can use: sin, cos, sqrt functions on a single number')
+#         bot.register_next_step_handler(msg, calc)
 
-def work(message: telebot.types.Message):
+def work(message: telebot.types.Message, start = 0):
+    if start != 0:
+        bot.send_message(message.from_user.id, 'Input request')
     try:
-        ask = message.text
+        ask = ''
+        aski = message.text.split()
+        for i in aski:
+            ask += i
         def minus(ask):
             return ask[0] - ask[1]
 
@@ -51,26 +57,49 @@ def work(message: telebot.types.Message):
             if "*" in ask:
                 return multi([count_from_string(item) for item in ask.split("*", 1)])
 
-        bot.send_message(message.from_user.id, f'Answer: {round(count_from_string(ask), 2)}')
+        msg = bot.reply_to(message, f'Answer: {round(count_from_string(ask), 2)}\nNew request? y/n')
+        answr = message.text
+        if 'y' in answr:
+            bot.register_next_step_handler(msg, mode, start = 1)
+            return start
     except Exception:
-        bot.send_message(message.from_user.id, f'ERROR')
-    bot.register_next_step_handler(message, cycl)
+        msg = bot.reply_to(message, f'ERROR\nNew request? y/n')
+        answr = message.text
+        if 'y' in answr:
+            bot.register_next_step_handler(msg, mode, start = 1)
+            return start
+            
+def mode(msg: telebot.types.Message, start = 0):
+    if start != 0:
+        bot.send_message(msg.from_user.id, 'Please select mode by typing a proper number:\n(1) Rational\(2) Complex')   
+    answ = msg.text
+    if answ == '1':
+        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can sum[+], substract[-], multiply[*] or divide[/]\nany rational numbers in any order, in round brackets [()] too')
+        bot.register_next_step_handler(msg, work)
+    elif answ == '2':
+        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can use: sin, cos, sqrt functions on a single number')
+        bot.register_next_step_handler(msg, calc)
 
-def cycl(hm: telebot.types.Message):
-    bot.send_message(hm.from_user.id, f'New request? y/n')
-    answr = hm.text
-    if answr == 'y':
-        bot.register_next_step_handler(hm, work)
+# def cycl(hm: telebot.types.Message):
+#     bot.send_message(hm.from_user.id, f'New request? y/n')
+#     answr = hm.text
+#     if answr == 'y':
+#         bot.register_next_step_handler(hm, mode)
 
 def calc(message: telebot.types.Message):
     try:
         ask = message.text.split()
         func = getattr(cmath, ask[0])
         result = func(int(ask[1]))
-        bot.send_message(message.from_user.id, f'Answer: {result}')
+        msg = bot.reply_to(message, f'Answer: {round(result, 2)}\nNew request? y/n')
+        answr = message.text
+        if 'y' in answr:
+            bot.register_next_step_handler(msg, calc) 
     except Exception:
-        bot.send_message(message.from_user.id, f'ERROR')
-    bot.register_next_step_handler(message, cycl)        
+        msg = bot.reply_to(message, f'ERROR\nNew request? y/n')
+        answr = message.text
+        if 'y' in answr:
+            bot.register_next_step_handler(msg, calc)    
 
 # def calc():
 #     import math
