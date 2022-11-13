@@ -6,6 +6,9 @@ bot = telebot.TeleBot('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 print('\nNashira s\'here')
 
+@bot.message_handler(commands='help')
+def helpme(here: telebot.types.Message):
+    bot.reply_to(here, 'Hi there, here\'s the list of avaible commands:\n/help\n/math')
 @bot.message_handler(commands=['math'])
 def math(meg: telebot.types.Message):
     with open('db.csv', 'a') as file:
@@ -21,7 +24,7 @@ def mode(msg: telebot.types.Message, start = 0):
         bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can sum[+], substract[-], multiply[*] or divide[/]\nany rational numbers in any order, in round brackets [()] too')
         bot.register_next_step_handler(msg, work)
     elif answ == '2':
-        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can use:\nHyperbolic functions(acosh, asinh, atanh, cosh, sinh, tanh)\nTrigonometric functions(acos, asin, atan, cos, sin, tan)\nClassification functions(isfinite, isinf, isnan, isclose)\nLogarithmic functions(exp, log, log10, sqrt) on a single number')
+        bot.send_message(msg.from_user.id, 'Now input your request, please.\nIn this mode, you can use:\nHyperbolic functions(acosh, asinh, atanh, cosh, sinh, tanh)\nTrigonometric functions(acos, asin, atan, cos, sin, tan)\nClassification functions(isfinite, isinf, isnan, isclose)\nLogarithmic functions(exp, log, log10, sqrt) on a single number\nConversions to and from polar coordinates(phase, polar, rect')
         bot.register_next_step_handler(msg, calc)
 
 def work(message: telebot.types.Message):
