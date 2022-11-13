@@ -10,7 +10,6 @@ if not os.path.exists(os.path.expanduser('~\\NSHR')):
 phonebook = 'Phonebook.txt'
 home = os.path.join(os.path.expanduser('~\\NSHR'))
 
-bot = telebot.TeleBot('5479458028:AAHnAfaQe6CqI0LNVcFeSaKzXEGp0ygFhxE')
 
 def howareu(update: Update, context: CallbackContext):
     log(update, context)
