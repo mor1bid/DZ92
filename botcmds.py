@@ -148,23 +148,3 @@ def math(update: Update, context: CallbackContext):
             return multi([count_from_string(item) for item in msg.split("*", 1)])
 
     update.message.reply_text(f'Answer: {round(count_from_string(msg), 2)}')
-
-# def nbook(update: Update, context: CallbackContext):
-    # def start_3(message, value):
-    #     print(message.text, value)
-
-    # def start_2(message):
-    #     if message.text == "Паника":
-    #         bot.send_message(message.from_user.id, "Заразна!")
-    #     id2 = update.message.chat_id
-    #     msg = bot.send_message(chat_id = id2, text='Введите второе значение')
-    #     mysg = update.message.text.split()
-    #     mysg.pop(0)
-    #     bot.register_next_step_handler(msg, start_3, message.text)
-
-    # id = update.message.chat_id
-    # msg = bot.send_message(chat_id = id, text='Введите первое значение')
-    # answer_callback_query
-    # mysg = update.message.text.split()
-    # # mysg.pop(0)
-    # bot.register_next_step_handler(msg, start_2)
